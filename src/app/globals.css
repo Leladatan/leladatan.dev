@@ -1,0 +1,142 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #07060b;
+  --ink: #f4f4f6;
+  --muted: #b7b3c9;
+  --line: rgba(244, 244, 246, 0.14);
+  --accent: #a78bfa;
+  --accent-2: #7aa2ff;
+  color-scheme: dark;
+}
+
+html.light {
+  --bg: #f4f4f6;
+  --ink: #121018;
+  --muted: #5c5670;
+  --line: rgba(18, 16, 24, 0.12);
+  --accent: #5b3fd6;
+  --accent-2: #2458d6;
+  color-scheme: light;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --font-sans: var(--font-geist-latin), var(--font-geist-cyr), sans-serif;
+  --font-display: var(--font-syne), var(--font-geist-latin), sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--bg);
+}
+
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: #7c5cff;
+  color: white;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+::view-transition-old(page-swap) {
+  animation: 280ms ease both fade-up-out;
+}
+
+::view-transition-new(page-swap) {
+  animation: 420ms ease both fade-up-in;
+}
+
+@keyframes fade-up-out {
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes fade-up-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@keyframes shoot {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(-22deg);
+  }
+  12% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(-42vw, 24vh, 0) rotate(-22deg);
+  }
+}
+
+@keyframes line-breathe {
+  from {
+    transform: scaleX(0.35);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.shooting-star {
+  position: absolute;
+  z-index: 1;
+  width: 7rem;
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, white);
+  opacity: 0;
+}
+
+.shooting-star-a {
+  top: 22%;
+  right: 8%;
+  animation: shoot 7.5s ease-in 1.2s infinite;
+}
+
+.shooting-star-b {
+  top: 38%;
+  right: 24%;
+  animation: shoot 9s ease-in 4.4s infinite;
+}
+
+.motion-line {
+  animation: line-breathe 1.8s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(page-swap),
+  ::view-transition-new(page-swap),
+  .shooting-star,
+  .motion-line {
+    animation: none;
+  }
+
+  .shooting-star {
+    display: none;
+  }
+}
