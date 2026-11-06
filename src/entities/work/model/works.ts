@@ -1,6 +1,10 @@
 import { companyUrl } from "@/shared/lib/site";
 import type { Work } from "./types";
 
+function workLinks(links: Work["links"] = {}): Work["links"] {
+  return links;
+}
+
 export const works = [
   {
     slug: "task-manager",
@@ -29,7 +33,7 @@ export const works = [
       "React Hook Form",
       "Zod",
     ],
-    links: {},
+    links: workLinks(),
     media: [],
   },
   {
@@ -52,7 +56,7 @@ export const works = [
       en: "Dynamic JSON Schema blocks, visibility conditions, forms, and validation.",
     },
     stack: ["TypeScript", "React", "JSON Schema", "React Hook Form", "Zod"],
-    links: {},
+    links: workLinks(),
     media: [],
   },
   {
@@ -75,7 +79,7 @@ export const works = [
       en: "An Electron desktop app with the log, virtualized tables, and UI next to document scanners and RFID readers.",
     },
     stack: ["TypeScript", "React", "Electron"],
-    links: {},
+    links: workLinks(),
     media: [],
   },
   {
@@ -106,10 +110,10 @@ export const works = [
       "FSD",
       "Biome",
     ],
-    links: {
+    links: workLinks({
       demo: "https://dream-anime-frontend.vercel.app",
       github: "https://github.com/Leladatan/dream-anime-frontend",
-    },
+    }),
     media: [],
   },
 ] as const satisfies readonly Work[];
