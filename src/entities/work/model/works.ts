@@ -78,6 +78,40 @@ export const works = [
     links: {},
     media: [],
   },
+  {
+    slug: "dream-anime",
+    year: "2025",
+    type: "public",
+    draft: false,
+    title: { ru: "Dream Anime", en: "Dream Anime" },
+    summary: {
+      ru: "Публичная одностраничная витрина на Next.js: видео на первом экране, заголовки по скроллу и карточки, которые наклоняются за курсором.",
+      en: "A public one-page site in Next.js: a video hero, titles tied to scroll, and cards that tilt toward the pointer.",
+    },
+    task: {
+      ru: "Собрать открытый сайт с живой страницей: движение на GSAP и раскладка по FSD.",
+      en: "Build a public site with a live page: GSAP motion and an FSD layout.",
+    },
+    done: {
+      ru: "Одна страница: шапка, первый экран из четырёх видео со сменой по клику и обрезкой кадра по скроллу, заголовки по словам, блок о проекте, карточки функций с наклоном, кадр истории, который поворачивается за указателем, контакты и подвал. Сборка на Next.js 15, React, TypeScript, Tailwind CSS и Sass. Форматирование через Biome. Страница открыта на Vercel, код на GitHub.",
+      en: "One page: a header, a hero of four videos that swap on click and crop on scroll, word-by-word titles, an about block, feature cards that tilt, a story frame that turns toward the pointer, a contact block, and a footer. Built with Next.js 15, React, TypeScript, Tailwind CSS, and Sass. Formatting runs through Biome. The page is on Vercel, and the code is on GitHub.",
+    },
+    stack: [
+      "Next.js",
+      "TypeScript",
+      "React",
+      "Tailwind CSS",
+      "Sass",
+      "GSAP",
+      "FSD",
+      "Biome",
+    ],
+    links: {
+      demo: "https://dream-anime-frontend.vercel.app",
+      github: "https://github.com/Leladatan/dream-anime-frontend",
+    },
+    media: [],
+  },
 ] as const satisfies readonly Work[];
 
 export type WorkSlug = (typeof works)[number]["slug"];

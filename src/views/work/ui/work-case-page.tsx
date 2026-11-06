@@ -48,8 +48,42 @@ export async function WorkCasePage({
             ))}
           </ul>
         </Field>
+        {work.links.demo || work.links.github ? (
+          <Field label={t("case.links")}>
+            <ul className="grid gap-3">
+              {work.links.demo ? (
+                <li>
+                  <OutsideLink href={work.links.demo} label={t("case.site")} />
+                </li>
+              ) : null}
+              {work.links.github ? (
+                <li>
+                  <OutsideLink
+                    href={work.links.github}
+                    label={t("links.github")}
+                  />
+                </li>
+              ) : null}
+            </ul>
+          </Field>
+        ) : null}
       </dl>
     </main>
+  );
+}
+
+function OutsideLink({ href, label }: { href: string; label: string }) {
+  const text = href.replace(/^https?:\/\//, "").replace(/\/$/, "");
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      className="inline-block text-accent underline-offset-4 hover:underline"
+    >
+      <span className="text-xs tracking-[0.14em] uppercase">{label}</span>
+      <span className="mt-1 block text-base leading-6 text-ink">{text}</span>
+    </a>
   );
 }
 

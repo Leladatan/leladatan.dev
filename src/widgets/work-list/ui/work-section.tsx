@@ -52,7 +52,7 @@ export function WorkSection({
       <h2 className="mt-3 max-w-xl font-display text-4xl leading-none md:text-6xl">
         {title}
       </h2>
-      <div className="mt-12 grid gap-5 [perspective:1200px] md:grid-cols-3">
+      <div className="mt-12 grid gap-5 [perspective:1200px] md:grid-cols-2">
         {items.map((item, index) => (
           <WorkCard
             key={item.slug}

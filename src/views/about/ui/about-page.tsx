@@ -1,6 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { fullStack } from "@/shared/content/stack";
 import type { Locale } from "@/shared/i18n/routing";
-import { githubUrl, telegramUrl } from "@/shared/lib/site";
 
 export async function AboutPage({ locale }: { locale: Locale }) {
   setRequestLocale(locale);
@@ -24,47 +24,40 @@ export async function AboutPage({ locale }: { locale: Locale }) {
             <p key={paragraph}>{paragraph}</p>
           ))}
       </div>
-      <article className="mt-12 max-w-xl rounded-3xl border border-line p-6">
+      <section className="mt-14">
         <p className="text-xs tracking-[0.18em] text-accent uppercase">
           {t("about.study")}
         </p>
-        <p className="mt-4 text-lg leading-8">{t("about.education")}</p>
-      </article>
-      <div className="mt-4 grid gap-4 md:grid-cols-2">
-        <ContactLink
-          href={githubUrl}
-          label={t("links.github")}
-          host="github.com/Leladatan"
-        />
-        <ContactLink
-          href={telegramUrl}
-          label={t("links.telegram")}
-          host="t.me/leladatan"
-        />
-      </div>
+        <div className="mt-4 grid gap-4 md:grid-cols-2">
+          <article className="rounded-3xl border border-line p-6">
+            <p className="font-display text-3xl leading-none tracking-tight">
+              {t("about.vocational")}
+            </p>
+            <p className="mt-3 text-muted">{t("about.vocationalDetail")}</p>
+          </article>
+          <article className="rounded-3xl border border-line p-6">
+            <p className="font-display text-3xl leading-none tracking-tight">
+              {t("about.higher")}
+            </p>
+            <p className="mt-3 text-muted">{t("about.higherDetail")}</p>
+          </article>
+        </div>
+      </section>
+      <section className="mt-12 rounded-3xl border border-line p-6">
+        <p className="text-xs tracking-[0.18em] text-accent uppercase">
+          {t("stack.kicker")}
+        </p>
+        <ul className="mt-5 flex flex-wrap gap-2">
+          {fullStack.map((item) => (
+            <li
+              key={item}
+              className="inline-flex items-center rounded-full border border-line bg-[color-mix(in_srgb,var(--ink)_16%,var(--bg))] px-4 py-2 text-sm text-ink transition duration-200 hover:-translate-y-0.5 hover:bg-[color-mix(in_srgb,var(--ink)_24%,var(--bg))]"
+            >
+              {item}
+            </li>
+          ))}
+        </ul>
+      </section>
     </main>
-  );
-}
-
-function ContactLink({
-  href,
-  label,
-  host,
-}: {
-  href: string;
-  label: string;
-  host: string;
-}) {
-  return (
-    <a
-      href={href}
-      rel="noreferrer"
-      className="group flex items-end justify-between gap-4 rounded-3xl border border-line px-6 py-6 transition-colors hover:border-accent hover:bg-accent/10"
-    >
-      <span className="font-display text-3xl tracking-tight">{label}</span>
-      <span className="pb-1 text-sm text-muted transition-transform group-hover:translate-x-1">
-        {host}
-      </span>
-    </a>
   );
 }

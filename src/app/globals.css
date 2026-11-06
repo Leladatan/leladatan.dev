@@ -128,11 +128,40 @@ body {
   animation: line-breathe 1.8s ease-in-out infinite alternate;
 }
 
+html.theme-ripple::view-transition-group(root) {
+  animation: none;
+}
+
+html.theme-ripple::view-transition-old(root),
+html.theme-ripple::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+html.theme-ripple::view-transition-old(root) {
+  z-index: 1;
+}
+
+html.theme-ripple::view-transition-new(root) {
+  z-index: 2;
+  animation: theme-circle 720ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes theme-circle {
+  from {
+    clip-path: circle(0 at var(--theme-x) var(--theme-y));
+  }
+  to {
+    clip-path: circle(150vmax at var(--theme-x) var(--theme-y));
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-old(page-swap),
   ::view-transition-new(page-swap),
   .shooting-star,
-  .motion-line {
+  .motion-line,
+  html.theme-ripple::view-transition-new(root) {
     animation: none;
   }
 

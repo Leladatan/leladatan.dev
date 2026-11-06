@@ -6,6 +6,7 @@ import type { Locale } from "@/shared/i18n/routing";
 import { Hero } from "@/widgets/hero/ui/hero";
 import { StackSection } from "@/widgets/stack/ui/stack-section";
 import { WorkSection } from "@/widgets/work-list/ui/work-section";
+import { ScrollBand } from "./scroll-band";
 
 export async function HomePage({ locale }: { locale: Locale }) {
   setRequestLocale(locale);
@@ -13,10 +14,8 @@ export async function HomePage({ locale }: { locale: Locale }) {
 
   return (
     <>
-      <Hero
-        role={t("hero.role")}
-        scrollLabel={t("hero.scroll")}
-      />
+      <Hero role={t("hero.role")} scrollLabel={t("hero.scroll")} />
+      <ScrollBand />
       <WorkSection
         locale={locale}
         kicker={t("works.kicker")}

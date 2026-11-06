@@ -23,7 +23,13 @@ export function ThemeToggle({
     <button
       type="button"
       aria-label={dark ? toLight : toDark}
-      onClick={() => setTheme(dark ? "light" : "dark")}
+      onClick={(event) => {
+        const rect = event.currentTarget.getBoundingClientRect();
+        setTheme(dark ? "light" : "dark", {
+          x: rect.left + rect.width / 2,
+          y: rect.top + rect.height / 2,
+        });
+      }}
       className="grid h-9 w-9 place-items-center rounded-full border border-current/20"
     >
       {dark ? <SunIcon /> : <MoonIcon />}

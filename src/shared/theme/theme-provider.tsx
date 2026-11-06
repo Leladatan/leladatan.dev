@@ -7,12 +7,15 @@ import {
   useEffect,
   useState,
 } from "react";
+import { flushSync } from "react-dom";
 
 export type Theme = "light" | "dark";
 
+export type ThemeOrigin = { x: number; y: number };
+
 type ThemeContextValue = {
   theme: Theme;
-  setTheme: (theme: Theme) => void;
+  setTheme: (theme: Theme, origin?: ThemeOrigin) => void;
 };
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
@@ -42,10 +45,32 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     return () => window.removeEventListener("storage", onStorage);
   }, []);
 
-  const setTheme = (next: Theme) => {
-    setThemeState(next);
-    localStorage.setItem("theme", next);
-    applyTheme(next);
+  const setTheme = (next: Theme, origin?: ThemeOrigin) => {
+    const commit = () => {
+      flushSync(() => setThemeState(next));
+      localStorage.setItem("theme", next);
+      applyTheme(next);
+    };
+    const reduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    const root = document.documentElement;
+    if (
+      reduced ||
+      !origin ||
+      typeof document.startViewTransition !== "function"
+    ) {
+      commit();
+      return;
+    }
+
+    root.style.setProperty("--theme-x", `${origin.x}px`);
+    root.style.setProperty("--theme-y", `${origin.y}px`);
+    root.classList.add("theme-ripple");
+    const transition = document.startViewTransition(commit);
+    transition.finished.finally(() => {
+      root.classList.remove("theme-ripple");
+    });
   };
 
   return (
