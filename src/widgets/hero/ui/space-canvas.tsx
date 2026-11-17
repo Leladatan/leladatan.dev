@@ -8,6 +8,7 @@ import {
   CanvasTexture,
   Color,
   type Group,
+  MathUtils,
   type Points,
   SRGBColorSpace,
 } from "three";
@@ -66,6 +67,7 @@ function Cosmos({
 }) {
   const group = useRef<Group>(null);
   const dust = useRef<Points>(null);
+  const look = useRef({ x: 0, y: 0 });
   const glow = useMemo(
     () =>
       radialTexture([
@@ -103,12 +105,15 @@ function Cosmos({
     [glow, cloud],
   );
 
-  useFrame((state) => {
+  useFrame((state, delta) => {
     const root = group.current;
     if (!root || reduced) return;
     const drift = state.clock.elapsedTime;
-    root.rotation.y = drift * 0.016 + state.pointer.x * 0.22;
-    root.rotation.x = state.pointer.y * 0.1;
+    const step = Math.min(delta, 0.05);
+    look.current.x = MathUtils.damp(look.current.x, state.pointer.y * 0.1, 3.2, step);
+    look.current.y = MathUtils.damp(look.current.y, state.pointer.x * 0.22, 3.2, step);
+    root.rotation.y = drift * 0.016 + look.current.y;
+    root.rotation.x = look.current.x;
     root.position.z = -scroll.current * 6;
     if (dust.current) dust.current.rotation.y = -drift * 0.02;
   });
